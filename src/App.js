@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from "react";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import axios from "axios";
+
+//Components
+import Persona from "./components/persona";
+import Genero from "./components/genero";
+import Libro from "./components/libro";
+import PersonaForm from "./components/personaForm"
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  
+ 
+ 
+  return(
+   <React.Fragment>
+     <div>
+       <Persona/>
+     </div>
+     <div>
+       <PersonaForm/>
+     </div>
+   </React.Fragment>
+   
+    
+  )
 }
 
 export default App;
