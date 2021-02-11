@@ -1,30 +1,24 @@
-import React, {useEffect, useState} from "react";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import axios from "axios";
-
-//Components
-import Persona from "./components/persona";
-import Genero from "./components/genero";
-import Libro from "./components/libro";
-import PersonaForm from "./components/personaForm"
-
+import React from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Libro from './components/Libro' ;
+import Genero from './components/Genero' ;
+import Inicio from './components/Inicio' ;
+import Persona from './components/Persona' ;
+import ProyectoState from './useContext/proyectState'
 
 function App() {
-  
- 
- 
-  return(
-   <React.Fragment>
-     <div>
-       <Persona/>
-     </div>
-     <div>
-       <PersonaForm/>
-     </div>
-   </React.Fragment>
-   
-    
-  )
+  return (
+    <ProyectoState>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={Inicio} />
+          <Route exact path ='/persona' component={Persona} />
+          <Route exact path='/genero' component={Genero} />
+          <Route exact path='/libros' component={Libro} />      
+        </Switch>
+      </Router>
+    </ProyectoState>
+    );
 }
 
 export default App;

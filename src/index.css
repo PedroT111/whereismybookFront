@@ -1,0 +1,108 @@
+:root {
+  --blanco: #ffffff;
+  --gris1: #edf2f6;
+  --gris2: #2f3848;
+  --gris3: #1a202d;
+  --negro: #000000;
+  --headingFont:'Raleway', sans-serif;
+  --textFont:  'Roboto', sans-serif;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+} 
+html {
+  box-sizing: border-box;
+  height: 100%;
+  font-size: 62.5%; 
+}
+body {
+  min-height: 100%;
+  background-color:#a1a9b9;
+  font-size: 16px; 
+  font-size: 1.6rem;
+  font-family: var(--textFont);
+}
+
+
+h1, h2 {
+  font-family: var(--headingFont);
+  font-weight: 900;
+  margin: 0 0 4rem 0;
+  text-align: center;
+  color: var(--gris2);
+}
+h1 span {
+  font-weight: 400;
+}
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2.4rem;
+}
+.form-usuario {
+  background-color: var(--gris2);
+  height: 100vh;
+  min-height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenedor-form {
+  padding: 5rem 3rem;
+  max-width: 500px;
+  width: 95%;
+  background-color: var(--blanco);
+  border-radius: 1rem;
+}
+
+.campo-form {
+  display: flex;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.alerta {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1rem 3rem;
+  border-radius: 1rem;
+  font-family: var(--headingFont);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 2.2rem;
+  text-align: center;
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 5%;
+  background-color: rgb(172, 9, 9);
+
+}
+
+.link-genero{
+  border: #000000 solid 2px;
+  border-radius: .5rem;
+  margin-top: 25% ;
+  margin-left: -35%;
+  background-color:black;
+  color: white;
+}
+.link-libros{
+  border: #000000 solid 2px;
+  border-radius: .5rem;
+  margin-top: 25% ;
+  margin-left: 9%;  
+  background-color:black;
+  color: white;
+}
+
+.form-usuario {
+  background-color: var(--gris2);
+  height: 100vh;
+  min-height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
