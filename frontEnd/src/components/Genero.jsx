@@ -8,10 +8,11 @@ import axios from 'axios'
 
 const Genero = (props) => {
     const proyectosContext = useContext(proyectoContext) ;
-    const {error,guardarError,verCategorias,categorias}=  proyectosContext 
+    const {error,guardarError,guardarEnviarCategoria,enviarCategoria}=  proyectosContext 
     //State Local
-    const [categoria, guardarCategoria] = useState('')
-    const [enviarCategoria, guardarEnviarCategoria] = useState(false)
+    const [categorias, verCategorias] = useState(false) ;
+    const [categoria, guardarCategoria] = useState('') ;
+    
     //Cuando el usuario ingresa el nombre de la categoria
     const onChange = e =>{
         guardarCategoria(e.target.value)
@@ -30,6 +31,7 @@ const Genero = (props) => {
 
         guardarEnviarCategoria(true)
         
+        
         }
         
 
@@ -39,12 +41,17 @@ const Genero = (props) => {
                 const url = 'http://localhost:3001/categoria';
                 axios.post(url,{
                     nombre:categoria
+                    
                 })
                 .then (respuesta =>{
                     console.log(respuesta)
+                    guardarEnviarCategoria(false)
+                    
+                    
                 })
                 .catch(error => {
                     console.log(error)
+                    
                 })
                 
             }
@@ -67,9 +74,10 @@ const Genero = (props) => {
 
     return ( 
         <Fragment>
-            <form onSubmit={onSubmit}>
+            
                 <div className='form-usuario'>
                     <div className='contenedor-form '>
+                        <form onSubmit={onSubmit}>
                         {error ? <Error mensaje='No se envio el nombre de la nueva categoria.'/>   :null}
                         <div className='campo-form'> 
                             <label htmlFor="categoria"> Ingresar nombre de la nueva Categoria</label>
@@ -86,24 +94,26 @@ const Genero = (props) => {
                         <button type='submit'>
                             Enviar Información
                         </button>
-                        
+
+                        </form>
+
+                        <button 
+                            onClick={noMostrarCategoria}
+                            type='button'
+                        >
+                            Dejas de mostrar las categorias.
+                        </button>
+
                         <button 
                             onClick={mostrarCategoria}
                             type='submit'
                         >
                             Buscar todas las categorias.
                         </button>
-                        
-                        <button 
-                            onClick={noMostrarCategoria}
-                            type='submit'
-                        >
-                            Dejas de mostrar las categorias.
-                        </button>
                         {categorias ? <MostrarCategoria />  :null}
                     </div>
                 </div>
-            </form>
+            
             
     </Fragment>
 

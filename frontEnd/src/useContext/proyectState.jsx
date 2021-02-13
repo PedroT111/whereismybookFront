@@ -17,7 +17,8 @@ const ProyectoState =   props =>{
     
     //Categoria
     const [buscarCategorias, stateBuscarCategorias] = useState([{}]);
-    const [categorias, verCategorias] = useState(false)
+    //State Local para activar el useEfect que envia por post a la BD
+    const [enviarCategoria, guardarEnviarCategoria] = useState(false)
 
     //Conexion con la base de datos para consultar por las categorias
     useEffect(() => {
@@ -32,7 +33,7 @@ const ProyectoState =   props =>{
             })
         }
         consultarApi(); 
-    }, []);
+    }, [enviarCategoria]);
     
         
     
@@ -43,14 +44,14 @@ const ProyectoState =   props =>{
         <proyectoContext.Provider 
             value={{
                 error,
-                guardarError,
-                agregarUsuario,
                 usuarios,
                 buscarCategorias,
+                enviarCategoria ,
+                guardarError,
+                agregarUsuario,
                 stateBuscarCategorias,
-                verCategorias,
-                categorias
-            }}
+                guardarEnviarCategoria
+                }}
         >
 
             {props.children}
