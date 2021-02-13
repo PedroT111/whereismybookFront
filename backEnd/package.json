@@ -1,0 +1,25 @@
+{
+  "name": "where-is-my-book",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PedroT111/Where-is-my-book.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PedroT111/Where-is-my-book/issues"
+  },
+  "homepage": "https://github.com/PedroT111/Where-is-my-book#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "util": "^0.12.3"
+  }
+}
