@@ -1,69 +1,36 @@
-import React,{useContext,Fragment, useState} from 'react' ;
+import React,{useContext,Fragment, useState, useEffect} from 'react' ;
 import proyectoContext from '../useContext/proyectoContext' ;
 import axios from 'axios' ;
+import CargaComponente from './CargaComponente'
+import MostrarLibrosCategorias from './MostrarLibrosCategoria';
 
 const MostrarCategoria = () => {
 
     //useContext
     const proyectosContext = useContext(proyectoContext) ;
-    const {error,guardarError,buscarCategorias,categoria}=  proyectosContext 
-
-    //State local
-    const [cambiarCategoria, guardarCambiarCategoria] = useState(false) ;
-    const [nuevoNombreCategoria, guardarNuevoNombreCategoria] = useState({nombre:''})
-
-    const {nombre} =nuevoNombreCategoria;
-
-
-    const editarCategoria = () =>{
-        guardarCambiarCategoria(true)
-        
-    }
-
-
-    const eliminarCategoria= () =>{
-
-    }
-
-    const cambiarNombreCategoria = e =>{
-        guardarNuevoNombreCategoria(e.target.value)
-    }
+    const {error,guardarError,mostrarLibros}=  proyectosContext 
 
     
 
+    let componente ;
+    if(mostrarLibros === false){
+        componente = <CargaComponente />
+    }else{
+        componente=<MostrarLibrosCategorias />
+    }
 
-    return ( 
-        <Fragment>
-        <h1>asd</h1>
-        <tr>
-            {buscarCategorias.map(categorias => (
-                <tr> 
-                    <td>{categorias.nombre}</td> 
-                    <td>{categorias.id}</td> 
-                    <td>
-                        <input
-                            type='submit'
-                            value='Editar nombre'
-                            onClick={editarCategoria}
-                            id={categorias.id}
-                            
-                        />
-                        <button
-                            type='submit'
-                            onClick={eliminarCategoria}
-                        >Eliminar</button>
-                    </td>
-                    
-                    
-            </tr>
 
+        return ( 
+            <Fragment>
+            <div className='categorias'></div>
+            <tr>
                 
-            ))} 
-        
                 
-        </tr>
-    </Fragment>
-    );
-}
+                        {componente}   
+                
+            </tr>   
+        </Fragment>
+        );
+    }
 
 export default MostrarCategoria;

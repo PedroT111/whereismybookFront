@@ -8,17 +8,22 @@ import ProyectoState from './useContext/proyectState'
 
 function App() {
   return (
-    <ProyectoState>
-      <Router>
-        <Switch>
-          <Route exact path='/' component={Inicio} />
-          <Route exact path ='/persona' component={Persona} />
-          <Route exact path='/categoria' component={Genero} />
-          <Route exact path='/libros' component={Libro} />      
-        </Switch>
-      </Router>
-    </ProyectoState>
+    <div className='App'>
+      <div className='container'>
+        <ProyectoState>
+          <Router>
+            <Switch>
+              <Route exact path='/' component={Inicio} />
+              <Route exact path ='/persona' component={Persona} />
+              <Route exact path='/categoria' component={Genero} />
+              <Route exact path='/libros' component={Libro} />      
+            </Switch>
+          </Router>
+        </ProyectoState>
+    </div>
+    </div>
     );
+    
 }
 
 export default App;

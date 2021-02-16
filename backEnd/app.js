@@ -99,7 +99,7 @@ const qy = util.promisify(conexion.query).bind(conexion);
     app.get("/categoria/:id", async (req, res)=>
     {   
         try{
-            const query= "SELECT * FROM categoria WHERE categoria.id = ?";
+            const query= "SELECT * FROM categoria WHERE id = ?";
     
             const respuesta= await qy(query,[req.params.id]);
             
@@ -123,8 +123,8 @@ const qy = util.promisify(conexion.query).bind(conexion);
     {   
         try
         { 
-            const idCategoria = req.params.id ;
-           
+            const idCategoria =req.params.id ; 
+            
 
             let query = 'SELECT * FROM categoria WHERE id = ?' ; 
             let respuesta = await  qy ( query , [idCategoria]) ; 
@@ -135,26 +135,25 @@ const qy = util.promisify(conexion.query).bind(conexion);
                 throw new Error ( 'No existe la categoría indicada') ; 
             }
 
-             query = 'SELECT * FROM libro WHERE categoriaID = ? AND personaID = ?' ; 
-             respuesta = await  qy ( query , [idCategoria]) ;
-             if(respuesta.length > 0 )
-             {
-                 throw new Error ( 'Hay libros de esa categoria prestados, no se puede borrar')
-             }
+            query = 'SELECT * FROM libro WHERE categoriaID = ? AND personaID = ?' ; 
+            respuesta = await  qy ( query , [idCategoria]) ;
+            if(respuesta.length > 0 )
+            {
+                throw new Error ( 'Hay libros de esa categoria prestados, no se puede borrar')
+            } 
 
-            query = 'DELETE FROM categoria WHERE id = ? ' ; 
-            respuesta = await qy(query,[idCategoria ]) ;
+            query = 'DELETE FROM categoria WHERE id = ? '; 
+            respuesta = await qy( query , [idCategoria ]) ;
             res.status(200).send('Se Borro correctamente') ;
-            }
+            } 
         
 
             catch(e) 
-    {
-        console.error(e.message)  ;
-        res.send({'error': e.message}) ;
-    }
+            {
+                console.error(e.message)  ;
+                res.send({'error': e.message}) ;
+            }
     })
-
 
 // -----RUTA PERSONA-----
 
@@ -296,6 +295,8 @@ app.delete('/persona/:id', async ( req , res ) =>
     }
 })
 
+
+
 // Libros
     
 app.post('/libro', async ( req , res ) =>
@@ -368,7 +369,7 @@ app.get('/libro/:id' , async (req , res) =>
     {
         let id = req.params.id ;
 
-        let query = 'SELECT * FROM libro WHERE id = ? ' ; 
+        let query = 'SELECT * FROM libro WHERE categoriaID = ? ' ; 
         let respuesta = await qy( query , [id]) ;
         if(respuesta.length == 0)
         {
@@ -542,7 +543,7 @@ app.delete("/libro/:id", async (req, res) => {
         }
 
         query = 'DELETE FROM libro WHERE id = ? '
-        respuesta= await qy(query, [ idLibro, ]) ;
+        respuesta= await qy(query, [ idLibro ]) ;
         res.status(200).send({'respuesta':"El libro se borró exitosamente"});
     }
     catch(e){

@@ -74,7 +74,7 @@ const Genero = (props) => {
 
     return ( 
         <Fragment>
-            
+            <div className='lead text-center'>
                 <div className='form-usuario'>
                     <div className='contenedor-form '>
                         <form onSubmit={onSubmit}>
@@ -91,7 +91,10 @@ const Genero = (props) => {
                             />
                         </div>
 
-                        <button type='submit'>
+                        <button 
+                            type='submit'
+                            className='btn btn-block btn-info'    
+                        >
                             Enviar Información
                         </button>
 
@@ -100,21 +103,24 @@ const Genero = (props) => {
                         <button 
                             onClick={noMostrarCategoria}
                             type='button'
+                            className='btn btn-block btn-primary '
                         >
-                            Dejas de mostrar las categorias.
+                            Dejar de mostrar las categorias.
                         </button>
 
                         <button 
                             onClick={mostrarCategoria}
-                            type='submit'
+                            type='button'
+                            className='btn btn-block btn-success '
                         >
                             Buscar todas las categorias.
                         </button>
+                        
                         {categorias ? <MostrarCategoria />  :null}
                     </div>
                 </div>
-            
-            
+               </div>
+                
     </Fragment>
 
 

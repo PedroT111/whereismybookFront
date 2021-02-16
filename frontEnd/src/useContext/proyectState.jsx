@@ -19,6 +19,13 @@ const ProyectoState =   props =>{
     const [buscarCategorias, stateBuscarCategorias] = useState([{}]);
     //State Local para activar el useEfect que envia por post a la BD
     const [enviarCategoria, guardarEnviarCategoria] = useState(false)
+    //
+    const [mostrarLibros, guardarMostrarLibros] = useState(false)   
+
+    //Guardar el id de la categoria que se quiere eliminar o ver sus libros
+    const [categoriaID, guardarCategoriaID] = useState(0) 
+    
+    
 
     //Conexion con la base de datos para consultar por las categorias
     useEffect(() => {
@@ -50,7 +57,11 @@ const ProyectoState =   props =>{
                 guardarError,
                 agregarUsuario,
                 stateBuscarCategorias,
-                guardarEnviarCategoria
+                guardarEnviarCategoria,
+                guardarMostrarLibros,
+                mostrarLibros,
+                guardarCategoriaID,
+                categoriaID
                 }}
         >
 
