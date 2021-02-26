@@ -1,4 +1,5 @@
 :root {
+<<<<<<< Updated upstream
   --blanco: #ffffff;
   --gris1: #edf2f6;
   --gris2: #2f3848;
@@ -109,3 +110,71 @@ h2 {
 .categorias{
   margin-top: 5%;
 }
+=======
+    --blanco: #ffffff;
+    --gris1: #edf2f6;
+    --gris2: #2f3848;
+    --gris3: #1a202d;
+    --negro: #000000;
+    --headingFont:'Raleway', sans-serif;
+    --textFont:  'Roboto', sans-serif;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  } 
+  html {
+    box-sizing: border-box;
+    height: 90%;
+    font-size: 62.5%; 
+  }
+  body {
+    min-height: 100%;
+    background-color:#a1a9b9;
+    font-size: 16px; 
+    font-size: 1.6rem;
+    font-family: var(--textFont);
+  }
+  
+  
+  h1, h2 {
+    font-family: var(--headingFont);
+    font-weight: 900;
+    margin: 0 0 4rem 0;
+    text-align: center;
+    color: var(--gris2);
+  }
+  h1 {
+    font-size: 3rem;
+  }
+  h2 {
+    font-size: 2.4rem;
+  }
+  .contenedor-form {
+    padding: 5rem 3rem;
+    width: 100%;
+    background-color: var(--blanco);
+    border-radius: 1rem;
+    
+  }
+  
+  h3{
+     
+     font-size: 2.5rem;
+  }
+  
+
+  
+  .form-usuario {
+    background-color: var(--gris2);
+    height: 100vh;
+    min-height: 800px;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+  }
+  
+  
+  
+>>>>>>> Stashed changes

@@ -6,12 +6,17 @@ import MostrarCategoria from './MostrarCategoria' ;
 import axios from 'axios'
 
 
-const Genero = (props) => {
+const Genero = () => {
     const proyectosContext = useContext(proyectoContext) ;
+<<<<<<< Updated upstream:frontEnd/src/components/Genero.jsx
     const {error,guardarError,guardarEnviarCategoria,enviarCategoria}=  proyectosContext 
+=======
+    const {error,guardarError,guardarEnviarCategoria,enviarCategoria,cargando,guardarCargando,guardarErrorCategoriaRepetida,errorCategoriaRepetida}=  proyectosContext 
+>>>>>>> Stashed changes:frontEnd/src/components/categoria/Genero.jsx
     //State Local
     const [categorias, verCategorias] = useState(false) ;
     const [categoria, guardarCategoria] = useState('') ;
+    const [opcion, guardarOpcion] = useState(true)
     
     //Cuando el usuario ingresa el nombre de la categoria
     const onChange = e =>{
@@ -28,20 +33,17 @@ const Genero = (props) => {
             return guardarError(true)    
         }
         guardarError(false)
-
+        postLibro()
         guardarEnviarCategoria(true)
-        
-        
         }
         
 
         //Envia la información a la base de datos
-        useEffect( () => {
-            const consultarApi = () =>{
+        const postLibro =() =>{
+            const consultarApi =async () =>{
                 const url = 'http://localhost:3001/categoria';
-                axios.post(url,{
+                await axios.post(url,{
                     nombre:categoria
-                    
                 })
                 .then (respuesta =>{
                     console.log(respuesta)
@@ -51,13 +53,15 @@ const Genero = (props) => {
                 })
                 .catch(error => {
                     console.log(error)
+                    guardarEnviarCategoria(false)
+                    guardarErrorCategoriaRepetida(true)
                     
                 })
-                
             }
             consultarApi() 
-        }, [enviarCategoria])
+        }
         
+<<<<<<< Updated upstream:frontEnd/src/components/Genero.jsx
 
 
 
@@ -70,17 +74,42 @@ const Genero = (props) => {
     //Boton de No mostrar categorias
     const noMostrarCategoria= () =>{
         verCategorias(false)
+=======
+        
+
+    const onClickGuardarOpcion =() =>{
+        if(opcion){
+            guardarCargando(true)
+        setTimeout(() => {
+            verCategorias(true)
+            guardarCargando(false)
+            guardarOpcion(false)
+        }, 3000);
+        }else{
+        guardarOpcion(true)
+        verCategorias(false)}
+>>>>>>> Stashed changes:frontEnd/src/components/categoria/Genero.jsx
     }
 
     return ( 
         <Fragment>
+<<<<<<< Updated upstream:frontEnd/src/components/Genero.jsx
             <div className='lead text-center'>
                 <div className='form-usuario'>
                     <div className='contenedor-form '>
                         <form onSubmit={onSubmit}>
+=======
+            <header className='mt-5'>
+                <h1>Where is my book ?</h1>
+            </header>
+            
+            <div class="form-usuario"> 
+            <div className='contenedor-form'>
+                        <form onSubmit={onSubmit} className='row g-3  '>
+>>>>>>> Stashed changes:frontEnd/src/components/categoria/Genero.jsx
                         {error ? <Error mensaje='No se envio el nombre de la nueva categoria.'/>   :null}
-                        <div className='campo-form'> 
-                            <label htmlFor="categoria"> Ingresar nombre de la nueva Categoria</label>
+                        {errorCategoriaRepetida ?<Error mensaje={'El nombre de la categoria ingresada ya existe'}/>  :null}
+                            <label htmlFor="categoria" className='form-label'> Ingresar nombre de la nueva Categoria</label>
                             <input 
                                 type="text"
                                 placeholder='Ingresar Categoria'
@@ -88,18 +117,41 @@ const Genero = (props) => {
                                 name='nombreCategoria' 
                                 value={categoria}
                                 onChange={onChange}
+<<<<<<< Updated upstream:frontEnd/src/components/Genero.jsx
+=======
+                                className='form-control'
+                                
+>>>>>>> Stashed changes:frontEnd/src/components/categoria/Genero.jsx
                             />
-                        </div>
-
+                            
                         <button 
                             type='submit'
-                            className='btn btn-block btn-info'    
+                            className='btn   btn-info'    
                         >
                             Enviar Información
                         </button>
 
-                        </form>
+                        
+                        {opcion 
+                        ? 
+                            <button 
+                                onClick={onClickGuardarOpcion}
+                                type='button'
+                                className='btn  btn-success '
+                            >
+                                Buscar todas las categorias.
+                            </button>
+                        :
+                            <button 
+                                onClick={onClickGuardarOpcion}
+                                type='button'
+                                className='btn  btn-danger '
+                            >
+                                Dejar de mostrar las categorias.
+                            </button>
+                        }
 
+<<<<<<< Updated upstream:frontEnd/src/components/Genero.jsx
                         <button 
                             onClick={noMostrarCategoria}
                             type='button'
@@ -123,9 +175,15 @@ const Genero = (props) => {
                 
     </Fragment>
 
+=======
+                        {cargando ?  <Spinner />  : null}
+                        {categorias ? <MostrarCategoria />  :null}  
+>>>>>>> Stashed changes:frontEnd/src/components/categoria/Genero.jsx
 
-
-        
+                        </form> 
+                    </div> 
+                    </div>
+    </Fragment> 
     );
     
 }

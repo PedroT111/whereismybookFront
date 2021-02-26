@@ -5,22 +5,22 @@ import proyectoContext from './proyectoContext'
 
 const ProyectoState =   props =>{
 
-    const [error, guardarError] = useState(false)
-    const [usuarios, guardarUsuario] =useState(
-        [{}]
-    )
-
-    ///Persona
-    const agregarUsuario = usuario => (
-        guardarUsuario( [...usuarios,  usuario])
-    )
+    const [error, guardarError] = useState(false) ;
+    const [mensajeError, guardarMensajeError] = useState('') ;
+    const [errorLibro, guardarErrorLibro] = useState(false) ;
+    const [pedidoExitoso, guardarPedidoExitoso] = useState(false) ;
+    const [errorDescripcion, guardarErrorDescripcion] = useState(false) ;
+    const [errorDeleteCategoria, guardarErrorDeleteCategoria] = useState(false)
+    const [errorCategoriaRepetida, guardarErrorCategoriaRepetida] = useState(false)
+    const [errorDeleteLibro, guardarErrorDeleteLibro] = useState(false)
+    
     
     //Categoria
     const [buscarCategorias, stateBuscarCategorias] = useState([{}]);
     //State Local para activar el useEfect que envia por post a la BD
     const [enviarCategoria, guardarEnviarCategoria] = useState(false)
     //
-    const [mostrarLibros, guardarMostrarLibros] = useState(false)   
+    const [mostrarLibros, guardarMostrarLibros] = useState(true)   
 
     //Guardar el id de la categoria que se quiere eliminar o ver sus libros
     const [categoriaID, guardarCategoriaID] = useState(0) 
@@ -34,6 +34,7 @@ const ProyectoState =   props =>{
             .then(respuesta => {
                 
                 stateBuscarCategorias(respuesta.data.respuesta)
+                
             })
             .catch(error => {
                 console.log(error)
@@ -44,24 +45,54 @@ const ProyectoState =   props =>{
     
         
     
-    
+    //STATE DEL SECTOR LIBRO
+    const [mostrarTodosLibros, guardarMostrarTodosLibros] = useState(false)
+    const [nuevaDescripcion, guardarNuevaDescripcion] = useState(false) ;
+    const [descripcionLibro, guardarDescripcionLibro] = useState('')
+    const [idLibroPut, guardarIdLibroPut] = useState(0) ;
 
 
     return(
         <proyectoContext.Provider 
             value={{
                 error,
-                usuarios,
                 buscarCategorias,
                 enviarCategoria ,
+                mostrarLibros,
+                categoriaID,
+                cargando,
+                mostrarTodosLibros,
+                nuevaDescripcion,
+                descripcionLibro,
+                idLibroPut,
+                errorDescripcion,
+                mensajeError,
+                pedidoExitoso,
+                pedidoExitoso,
+                errorLibro,
+                errorCategoriaRepetida,
+                errorDeleteCategoria,
+                errorDeleteLibro,
                 guardarError,
-                agregarUsuario,
-                stateBuscarCategorias,
                 guardarEnviarCategoria,
                 guardarMostrarLibros,
-                mostrarLibros,
                 guardarCategoriaID,
+<<<<<<< Updated upstream
                 categoriaID
+=======
+                guardarErrorDescripcion,
+                guardarErrorLibro,
+                guardarCargando,
+                guardarPedidoExitoso,
+                guardarMostrarTodosLibros,
+                guardarMensajeError,
+                guardarNuevaDescripcion,
+                guardarDescripcionLibro,
+                guardarIdLibroPut,
+                 guardarErrorDeleteCategoria,
+                guardarErrorCategoriaRepetida,
+                guardarErrorDeleteLibro
+>>>>>>> Stashed changes
                 }}
         >
 

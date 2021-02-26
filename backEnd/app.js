@@ -123,8 +123,8 @@ const qy = util.promisify(conexion.query).bind(conexion);
     {   
         try
         { 
-            const idCategoria =req.params.id ; 
-            
+            const idCategoria = req.params.id ;
+           
 
             let query = 'SELECT * FROM categoria WHERE id = ?' ; 
             let respuesta = await  qy ( query , [idCategoria]) ; 
@@ -135,26 +135,25 @@ const qy = util.promisify(conexion.query).bind(conexion);
                 throw new Error ( 'No existe la categoría indicada') ; 
             }
 
-            query = 'SELECT * FROM libro WHERE categoriaID = ? AND personaID = ?' ; 
+            query = 'SELECT * FROM libro WHERE categoriaID = ?' ;   //Se modifico, hay que eliminar el personaID
             respuesta = await  qy ( query , [idCategoria]) ;
             if(respuesta.length > 0 )
             {
                 throw new Error ( 'Hay libros de esa categoria prestados, no se puede borrar')
-            } 
+            }
+           
 
-            query = 'DELETE FROM categoria WHERE id = ? '; 
-            respuesta = await qy( query , [idCategoria ]) ;
+            query = 'DELETE FROM categoria WHERE id = ? ' ; 
+            respuesta = await qy(query, [idCategoria ]) ;
             res.status(200).send('Se Borro correctamente') ;
-            } 
-        
-
+            }
+            
             catch(e) 
             {
                 console.error(e.message)  ;
-                res.send({'error': e.message}) ;
+                res.status(413).send({'error': e.message}) ;
             }
     })
-
 // -----RUTA PERSONA-----
 
 app.post('/persona', async ( req , res ) => 
@@ -369,7 +368,7 @@ app.get('/libro/:id' , async (req , res) =>
     {
         let id = req.params.id ;
 
-        let query = 'SELECT * FROM libro WHERE categoriaID = ? ' ; 
+        let query = 'SELECT * FROM libro WHERE id = ? ' ; 
         let respuesta = await qy( query , [id]) ;
         if(respuesta.length == 0)
         {
@@ -421,6 +420,7 @@ app.put("/libro/prestar/:id", async (req, res) => {
         let idLibro=req.params.id ;
         let personaID = req.body.personaID ;
         
+        //SE SACO LOS TRIM()
 
         if(!personaID) {
 
@@ -442,12 +442,18 @@ app.put("/libro/prestar/:id", async (req, res) => {
             throw new Error ("La persona a la que se quiere prestar el libro no existe") ;
         }
 
-        query ="SELECT * FROM libro WHERE personaID = ? AND id  = ? " ; 
+        /* query ="SELECT personaID FROM libro WHERE  id  = ? " ; 
+        respuesta = await qy(query, [ idLibro]) ; 
+        if(respuesta[0] != null )
+        {
+            throw new Error ( 'El libro se encuentra prestado')
+        }  */
+         query ="SELECT * FROM libro WHERE personaID = ? AND id  = ? " ; 
         respuesta = await qy(query, [personaID , idLibro]) ; 
         if(respuesta.length > 0 )
         {
             throw new Error ( 'El libro se encuentra prestado')
-        }
+        } 
 
         query= "UPDATE libro SET personaID = ? WHERE id=?";
         respuesta= await qy(query, [personaID,idLibro]);
@@ -468,10 +474,8 @@ app.put('/libro/devolver/:id' ,  async ( req , res ) =>
         let idLibro = req.params.id ;
         let personaID = req.body.personaID ; 
 
-        if(personaID.trim().length==0 ) 
-        {
-            throw new Error ('Se envio información vacia')
-        }
+    
+        //SE SACO LOS TRIM()
 
         if(!personaID)
         {
@@ -488,7 +492,7 @@ app.put('/libro/devolver/:id' ,  async ( req , res ) =>
 
         query = 'SELECT * FROM  libro WHERE personaID = ?'  ;
         respuesta = await qy (query , [personaID]);
-       
+    
         if(respuesta.length == 0) 
         {
             throw new Error ('La persona indicada no tiene ningun libro en este momento')
@@ -522,23 +526,25 @@ app.put('/libro/devolver/:id' ,  async ( req , res ) =>
 app.delete("/libro/:id", async (req, res) => {
     try{
         let idLibro = req.params.id ; 
-        let idPersona = req.body.idPersona ;  
-
-        if(idPersona.trim().length==0)
+        
+        
+        if(!idLibro  )
         {
-            throw new Error('Se envio información vacia');
+            throw new Error('No se envio la información necesaria')
         }
         let query= "SELECT * FROM libro WHERE id = ?"
         let respuesta= await qy(query , [idLibro]);
-
+        
         if(respuesta == 0){
             throw new Error ("No se encuentra ese libro") ;
         }
 
-        query= "SELECT * FROM libro WHERE  personaID = ? and id= ?" 
-        respuesta= await qy(query, [idPersona, idLibro ])
-
-        if(respuesta.length > 0){
+        //SE MODIFICO EL QUERY DE ABAJO
+        query ="SELECT personaID FROM libro WHERE  id  = ? " ; 
+        respuesta = await qy(query, [ idLibro]) ;
+        console.log(respuesta) 
+        if(respuesta.length == 0 )
+        {
             throw new Error ("El libro que se quiere eliminar se encuentra prestado")
         }
 
