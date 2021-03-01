@@ -31,7 +31,7 @@ const ProyectoState =   props =>{
     //Conexion con la base de datos para consultar por las categorias
     useEffect(() => {
         const consultarApi = () => {
-            axios.get("http://localhost:3001/categoria")
+            axios.get("http://localhost:3000/categoria")
             .then(respuesta => {
                 
                 stateBuscarCategorias(respuesta.data.respuesta)
@@ -89,7 +89,7 @@ const ProyectoState =   props =>{
                 guardarNuevaDescripcion,
                 guardarDescripcionLibro,
                 guardarIdLibroPut,
-                 guardarErrorDeleteCategoria,
+                guardarErrorDeleteCategoria,
                 guardarErrorCategoriaRepetida,
                 guardarErrorDeleteLibro
                 }}

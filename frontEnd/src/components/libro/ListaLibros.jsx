@@ -18,7 +18,7 @@ const ListaLibros = () => {
     //Consulta a la apí para traer todos los libros disponibles
     useEffect(() => {
         const consultarApi = () => {
-            const url = 'http://localhost:3001/libro' ;
+            const url = 'http://localhost:3000/libro' ;
             axios.get(url)
             .then ( respuesta => {
                 
@@ -37,7 +37,7 @@ const ListaLibros = () => {
     //Conexion con la api para traer la información de las personas
     useEffect(() => {
         const consultarApi = () =>{
-            const url=`http://localhost:3001/persona` ;
+            const url=`http://localhost:3000/persona` ;
             axios.get(url)
             .then(respuesta =>{
                 guardarAliasPersona(respuesta.data.respuesta) ;
@@ -57,7 +57,7 @@ const ListaLibros = () => {
     const devolverLibro = (id, personaID ) =>{
        
         const consultarAPI = async () =>{
-            const url =`http://localhost:3001/libro/devolver/${id}` ;
+            const url =`http://localhost:3000/libro/devolver/${id}` ;
             await axios.put(url , {personaID : personaID } )
             .then( respuesta => {
                 
@@ -77,7 +77,7 @@ const ListaLibros = () => {
     const eliminarLibro=( idLibroEliminar, personaID) =>{
         
         const consultarAPI= async () => {
-            const url = `http://localhost:3001/libro/${idLibroEliminar}` ;
+            const url = `http://localhost:3000/libro/${idLibroEliminar}` ;
             await axios.delete(url , {idPersona : personaID})
             
             .then(respuesta =>{
@@ -100,7 +100,7 @@ const ListaLibros = () => {
         
             guardarMostrarTodosLibros(true);
             const consultarAPI = async () =>{
-                const url=`http://localhost:3001/libro/prestar/${idLibroPrestar}`;
+                const url=`http://localhost:3000/libro/prestar/${idLibroPrestar}`;
                 await axios.put(url, { personaID: idPersona})
                 .then(respuesta =>{
                     

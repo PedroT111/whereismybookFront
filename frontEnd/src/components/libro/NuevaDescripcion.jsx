@@ -26,7 +26,7 @@ const NuevaDescripcion = () => {
         
         //Funcion que EDITA la descripcion d el libro seleccionado
         const consultarAPI= async() =>{
-            const url=`http://localhost:3001/libro/${idLibroPut}`
+            const url=`http://localhost:3000/libro/${idLibroPut}`
             await axios.put(url, {descripcion :descripcionLibro })
             .then( respuesta =>{
 

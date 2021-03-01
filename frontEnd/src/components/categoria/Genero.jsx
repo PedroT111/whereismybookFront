@@ -38,7 +38,7 @@ const Genero = () => {
         //Envia la información a la base de datos
         const postLibro =() =>{
             const consultarApi =async () =>{
-                const url = 'http://localhost:3001/categoria';
+                const url = 'http://localhost:3000/categoria';
                 await axios.post(url,{
                     nombre:categoria
                 })
@@ -74,11 +74,7 @@ const Genero = () => {
     }
 
     return ( 
-        <Fragment>
-            <header className='mt-5'>
-                <h1>Where is my book ?</h1>
-            </header>
-            
+        <Fragment> 
             <div class="form-usuario"> 
             <div className='contenedor-form'>
                         <form onSubmit={onSubmit} className='row g-3  '>

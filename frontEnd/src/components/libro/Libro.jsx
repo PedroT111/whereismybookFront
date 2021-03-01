@@ -47,7 +47,7 @@ const Libro = () => {
    
         const postLibro2 = e =>{
             const consultarApi = async () =>{
-                const url='http://localhost:3001/libro' ;
+                const url='http://localhost:3000/libro' ;
                 await axios.post(url,{
                     nombre:nombre,
                     descripcion:descripcion,
@@ -76,9 +76,7 @@ const Libro = () => {
     }
     return ( 
     <Fragment>
-            <header className='mt-5'>
-                <h1>Where is my book ?</h1>
-            </header>
+            
 
             <div className='form-usuario'>
                 <div className='contenedor-form '>

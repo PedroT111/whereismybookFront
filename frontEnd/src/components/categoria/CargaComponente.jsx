@@ -16,7 +16,7 @@ const CargaComponente  = () => {
     const funcionEliminarCategoria = (categoriaID) =>{
         
         const eliminarCategoria = () => {
-            const url =`http://localhost:3001/categoria/${categoriaID}` ;
+            const url =`http://localhost:3000/categoria/${categoriaID}` ;
             axios.delete(url)
         
         .then (respuesta => {
@@ -44,7 +44,7 @@ const CargaComponente  = () => {
     //Funcion que trae todos los libros
     const MostrarLibrosCategoria = () =>{
                 
-        axios.get(`http://localhost:3001/libro`) 
+        axios.get(`http://localhost:3000/libro`) 
         .then(respuesta => {
             
             guardarMostrarLibrosLista(respuesta.data.respuesta)
