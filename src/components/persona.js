@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PersonaForm from "./personaForm"
 import EditarUsuario from "./editarUsuario";
-
+import LibrosPersona from "./librosPersona"
+import ErrorPersona from "./errorPersona"
+import Spinner from "./spinner"
 
 const Persona = (props) => {
-    //State
+
   const [usuarios, setUsuarios] = useState([{}]) ;
-  
 
   //Petición Usuarios a la API
     useEffect(() => {
@@ -21,120 +22,250 @@ const Persona = (props) => {
 
 
         setUsuarios(user);
-
-        
 }
 
 // Eliminar usuario
+  const [error, setError] = useState(false)
+  
   const eliminarUsuario = (id) => {
     const consultarApi = async () =>{
       const url = 'http://localhost:3000/persona/' + id;
       await axios.delete(url)
       .then (respuesta =>{
+          
           console.log(respuesta)
-          
-          
-          
+          obtenerUsuarios(); //Para actualizar sin recargar la pagina
       })
       .catch(error => {
           console.log(error)
-          
+          setError(true);
       })
       
   }
   consultarApi()
   
 }
-//Editar usuario
-const [editar, setEditar] = useState(false)
-const [usuarioEditado, setUsuarioEditado] = useState()
 
+    //Editar usuario
+    const [editar, setEditar] = useState(false)
+    const [personaID, setPersonaID] = useState("");
+    const [usuarioEditado, setUsuarioEditado] = useState([])
+    const [datosUsuario, setDatosUsuario] = useState([])
+    const [enviarCambios, guardarEnviarCambios] = useState(false)
 
-const editarUsuario = (usuario) => {
-  setEditar(true);
-  
-}
+    const editarUsuario = (id, nombre, apellido, alias, imail) => {
+      setEditar(true);  
+      setPersonaID(id)
 
-const guardarCambios = (id) => {
-  const consultarApi = async () =>{
-    const url = 'http://localhost:3000/persona/' + id;
-    await axios.put(url,
+      setDatosUsuario(
+        
+          {nombre : nombre,
+          apellido: apellido,
+          alias: alias,
+          imail: imail}
+        
       )
-    .then (respuesta =>{
-        console.log(respuesta)
-        
-        
-        
-    })
-    .catch(error => {
-        console.log(error)
-        
-    })
+    }  
     
-}
-consultarApi()
-setEditar(false) //Para volver al formulario principal
+    console.log(datosUsuario)
+    console.log(datosUsuario.apellido)
+    
+      //Enviar datos    
+      useEffect( ()=> {
+        const consultarApi = async () =>{
+          const url = 'http://localhost:3000/persona/' + personaID ;
+          await axios.put(url, usuarioEditado
+            )
+          .then (respuesta =>{
+              console.log(respuesta)
+              guardarEnviarCambios(false)
+          })
+          .catch(error => {
+              console.log(error)
+              
+          })
+          
+      }
+      consultarApi()
+      
+      }, [enviarCambios])
 
-}
+      // Peticionar un get de los usuarios luego de editar
+      
+      useEffect(() => {
+        obtenerUsuarios()
+      
+      }, [enviarCambios])
+
+    //Agregar Usuario
+    const [datos, setDatos] = useState([]);
+    const [enviarDatos, guardarEnviarDatos] = useState(false)
+
+  useEffect( () => {
+    const consultarApi = async () =>{
+        const url = 'http://localhost:3000/persona';
+        await axios.post(url, 
+          
+          datos
+          
+          )
+        .then (respuesta =>{
+            console.log(respuesta)
+            guardarEnviarDatos(false)
+            
+            
+        })
+        .catch(error => {
+            console.log(error)
+            
+        })
+        
+    }
+    consultarApi();
+    
+  }, [enviarDatos])
+
+//Peticionar a la API los usuarios despues de agregar uno nuevo
+  useEffect(() => {
+    obtenerUsuarios()
+
+  }, [enviarDatos])
 
 
+  //Mostar libros de la persona
+    
+  const [libros, setLibros] = useState(false);
+  const [usuarioID, setUsuarioID] = useState(0);
+  const [listaLibros, setListaLibros] = useState([{}]);
+  const [usuarioNombre , setUsuarioNombre] = useState("Vacio")
 
-  
+  const mostrarLibros = (id, nombre, apellido) =>{
+    setLibros(true);
+    setUsuarioID(id);
+    setUsuarioNombre(nombre + " " + apellido)
+  }
+
+  useEffect(() => {
+    const consultarApi = async () =>{
+        const url = "http://localhost:3000/libro/";
+        await axios.get(url)
+        .then (respuesta =>{
+            
+            setListaLibros(respuesta.data.respuesta)
+
+            console.log(listaLibros)  
+            
+        })
+        .catch(error => {
+            console.log(error)
+            
+        })
+        
+    }
+    consultarApi();
+    
+  }, [libros])
+    
   return(
     <React.Fragment>
     <div>
-      <h1>Where is my Book ?</h1>
-    <div className ="row align-items-start ">
-    <div className = "col">
+    <div className ="titulo">
+    <h1>Usuarios</h1>
+    </div>
+    <div className ="conteiner">
+  
+    <div className = "cformulario"> 
+       
       {
+        libros ? (<LibrosPersona
+                  usuarios = {usuarios}
+                  listaLibros={listaLibros}
+                  setListaLibros={setListaLibros}
+                  usuarioID={usuarioID}
+                  setLibros={setLibros}
+                  usuarioNombre={usuarioNombre}/>) : (
         editar ? (
           <div>
-            <EditarUsuario/>
+            <EditarUsuario
+            usuarioEditado= {usuarioEditado}
+            enviarCambios={enviarCambios}
+            setUsuarioEditado={setUsuarioEditado}
+            setEditar={setEditar}
+            guardarEnviarCambios={guardarEnviarCambios}
+            datosUsuario={datosUsuario}
+            
+          />
           </div>
         ) : (
           <div>
      
-            <PersonaForm/>
+            <PersonaForm
+            datos = {datos}
+            setDatos= {setDatos}
+            guardarEnviarDatos ={guardarEnviarDatos}/>
             
           </div>
-        )
+        ) )
       }
+    
 
-    </div>
+    </div> 
 
-    <div className = "col w-50">
+    <div className = "cusuarios">
       
-        <h2>Usuarios</h2>
-        <table>
+       
+        <table className="table table-dark table-striped">
+          <thead>
            
-            <tr className="text-white">
-                <th scope="col">Nombre</th>
-                <th scope="col" >Apellido</th>
-                <th  scope="col">Alias</th>
-                <th scope="col" >Email</th>
+            <tr >
+                <th>Id</th>
+                <th>Nombre</th>
+                <th >Apellido</th>
+                <th >Alias</th>
+                <th >Email</th>
+                <th></th>
             </tr>
-             
-            {
+            </thead>
+            <tbody className="table-striped">
+             {
                 usuarios.map(usuario => (
-                    <tr className="bg-light" key = {usuario.id}>
-                        <td>{usuario.nombre}</td>
+                    <tr key = {usuario.id}>
+                        <td>{usuario.id}</td>
+                        <td>{usuario.nombre}</td>   
                         <td>{usuario.apellido}</td>
                         <td>{usuario.alias}</td>
                         <td>{usuario.imail}</td>
                         <td className="botones">
-                                    <button className="btn btn-success"
-                                            onClick ={() => {editarUsuario(usuario.id)}}  >Editar</button>
-                                    <button  className="btn btn-danger"
+                                  <button className="btn btn-success"
+                                            onClick ={() => {editarUsuario(
+                                              usuario.id, usuario.nombre,
+                                              usuario.apellido, usuario.alias, usuario.imail)}}>Editar</button>
+                                   
+                                  <button  className="btn btn-danger"
                                             onClick ={() => {eliminarUsuario(usuario.id)}}>Eliminar</button>
+                                
+                                  <button  className= "btn btn-light"
+                                            onClick= {e =>mostrarLibros
+                                            (usuario.id, usuario.nombre, usuario.apellido)}>Libros</button>
                                 </td>
                     </tr>
 
                 ))
                 }
+                </tbody>
 
-        </table>
+        </table> 
         </div>
-    </div>    
+       
+        
+    </div>   
+    {
+          error ? (
+            <ErrorPersona
+            setError = {setError}/>
+
+          ) : (null)
+        } 
     </div>
 
     </React.Fragment>
