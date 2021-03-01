@@ -58,7 +58,7 @@ const qy = util.promisify(conexion.query).bind(conexion);
     
             if(respuesta.length > 0){                        
                 throw new Error ("Esa categoría ya existe")
-         
+        
             }
     
             query= "INSERT INTO categoria (nombre) VALUES (?)"; 

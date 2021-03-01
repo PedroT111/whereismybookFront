@@ -23,7 +23,8 @@ const ProyectoState =   props =>{
     const [mostrarLibros, guardarMostrarLibros] = useState(true)   
 
     //Guardar el id de la categoria que se quiere eliminar o ver sus libros
-    const [categoriaID, guardarCategoriaID] = useState(0) 
+    const [categoriaID, guardarCategoriaID] = useState() 
+    
     
     
 
@@ -44,6 +45,8 @@ const ProyectoState =   props =>{
     }, [enviarCategoria]);
     
         
+    //Spinner
+    const[cargando , guardarCargando] = useState (false) ;
     
     //STATE DEL SECTOR LIBRO
     const [mostrarTodosLibros, guardarMostrarTodosLibros] = useState(false)
@@ -77,9 +80,6 @@ const ProyectoState =   props =>{
                 guardarEnviarCategoria,
                 guardarMostrarLibros,
                 guardarCategoriaID,
-<<<<<<< Updated upstream
-                categoriaID
-=======
                 guardarErrorDescripcion,
                 guardarErrorLibro,
                 guardarCargando,
@@ -92,7 +92,6 @@ const ProyectoState =   props =>{
                  guardarErrorDeleteCategoria,
                 guardarErrorCategoriaRepetida,
                 guardarErrorDeleteLibro
->>>>>>> Stashed changes
                 }}
         >
 

@@ -3,7 +3,7 @@ import proyectoContext from '../../useContext/proyectoContext' ;
 import Error from '../Error' ;
 import axios from 'axios'
 import ListaLibros from './ListaLibros'
-import Spinner from '../../components/categoria/Spinner'
+
 
 
 const Libro = () => {
@@ -155,7 +155,11 @@ const Libro = () => {
                     </div>
                 </div>
             </div> 
+            
+        
         </Fragment>
+
+        
     );
 }
 
